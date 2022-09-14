@@ -7,14 +7,14 @@ const auth = require('../middlewares/auth');
 const NotFoundError = require('../errors/NotFoundError');
 const { reg } = require('../constants');
 
-router.post('/signin', celebrate({
+router.post('/api/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
 }), login);
 
-router.post('/signup', celebrate({
+router.post('/api/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
@@ -26,11 +26,11 @@ router.post('/signup', celebrate({
 
 router.use(auth);
 
-router.use('/users', routerUser);
+router.use('/api/users', routerUser);
 
-router.use('/cards', routerCard);
+router.use('/api/cards', routerCard);
 
-router.use('/', (req, res, next) => {
+router.use('/api', (req, res, next) => {
   next(new NotFoundError('Данная страница не найдена'));
 });
 
