@@ -7,6 +7,12 @@ const auth = require('../middlewares/auth');
 const NotFoundError = require('../errors/NotFoundError');
 const { reg } = require('../constants');
 
+router.get('/api/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 router.post('/api/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),

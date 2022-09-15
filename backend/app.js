@@ -6,6 +6,8 @@ const { errors } = require('celebrate');
 
 const cors = require('cors');
 
+require('dotenv').config();
+
 const app = express();
 const { PORT = 3001 } = process.env;
 
