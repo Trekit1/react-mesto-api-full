@@ -1,0 +1,13 @@
+.authForm__link {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+}
