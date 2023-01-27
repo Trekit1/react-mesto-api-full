@@ -108,8 +108,7 @@ class Api {
 const token = localStorage.getItem('token');
 
 export const api = new Api({
-// url: "http://localhost:3001/api",
-  url: "https://api.trekit.nomoredomains.sbs",
+  url: "http://localhost:3001",
   headers: {
     authorization: `Bearer ${token}`,
     "Content-Type": "application/json",
