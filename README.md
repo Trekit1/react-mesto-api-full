@@ -6,9 +6,10 @@
 
 Для корректной работы проекта требуется:
  
-- React-router-dom v 5.2.1
-- React-dom v 18.2.0
-- React-scripts v 5.0.1
+- React-router-dom: v 5.2.1,
+- React-dom: v 18.2.0,
+- React-scripts: v 5.0.1,
+- express: v 4.18.1
 
 
 ### Функциональность и технологии: 
