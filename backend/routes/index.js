@@ -30,7 +30,7 @@ router.post('/signup', celebrate({
   }),
 }), createUser);
 
-router.use(auth);
+
 
 router.use('/users', routerUser);
 
