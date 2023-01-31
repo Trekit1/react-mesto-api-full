@@ -1,4 +1,5 @@
-export const BASE_URL = "http://localhost:3001";
+// export const BASE_URL = "http://localhost:3001";   
+export const BASE_URL = "https://react-mesto-api-full-rosy.vercel.app";
 
 const handleResponse = (res) => {
   if (res.ok) {
