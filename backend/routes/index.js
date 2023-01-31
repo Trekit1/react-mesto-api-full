@@ -5,7 +5,7 @@ const routerCard = require('./cards');
 const { login, createUser } = require('../controllers/users');
 const auth = require('../middlewares/auth');
 const NotFoundError = require('../errors/NotFoundError');
-const { reg } = require('../constants');
+const { reg } = require('../constants/constants.js');
 
 router.get('/crash-test', () => {
   setTimeout(() => {

@@ -5,7 +5,7 @@ const { getAllCards } = require('../controllers/cards');
 const { deleteCard } = require('../controllers/cards');
 const { likeCard } = require('../controllers/cards');
 const { dislikeCard } = require('../controllers/cards');
-const { reg } = require('../constants');
+const { reg } = require('../constants/constants.js');
 
 routerCard.post('/', celebrate({
   body: Joi.object().keys({

@@ -5,7 +5,7 @@ const { getUser } = require('../controllers/users');
 const { updateUserProfile } = require('../controllers/users');
 const { updateUserAvatar } = require('../controllers/users');
 const { getUserInfo } = require('../controllers/users');
-const { reg } = require('../constants');
+const { reg } = require('../constants/constants.js');
 
 routerUser.get('/', getAllUsers);
 routerUser.get('/me', getUserInfo);
