@@ -1,5 +1,7 @@
 
-export const BASE_URL = "https://unusual-pear-beret.cyclic.app";
+export const BASE_URL = "https://react-mesto-api-full-weld.vercel.app";
+//export const BASE_URL = "http://localhost:3001";
+
 
 const handleResponse = (res) => {
   if (res.ok) {
