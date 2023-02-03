@@ -138,28 +138,6 @@ function App() {
       });
   }
 
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [loggedIn]);
-
-  useEffect(() => {
-    api
-      .getUserInfo()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [loggedIn]);
-
   function authoriz(token) {
     const content = auth.getContent(token).then((res) => {
       if (res) {
@@ -178,6 +156,14 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       history.push("/");
+      Promise.all([api.getInitialCards(), api.getUserInfo()])
+      .then(([cards, userInfo]) => {
+        setCards(cards);
+        setCurrentUser(userInfo);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     }
   }, [loggedIn]);
 
@@ -225,6 +211,8 @@ function App() {
         console.log(err);
       });
   }
+
+  console.log(loggedIn)
 
   return (
     <div className="page__container">

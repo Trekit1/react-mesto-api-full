@@ -1,6 +1,6 @@
 
-export const BASE_URL = "https://react-mesto-api-full-weld.vercel.app";
-//export const BASE_URL = "http://localhost:3001";
+//export const BASE_URL = "https://react-mesto-api-full-weld.vercel.app";
+export const BASE_URL = "http://localhost:3001";
 
 
 const handleResponse = (res) => {
