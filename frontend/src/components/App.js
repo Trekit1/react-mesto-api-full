@@ -9,6 +9,7 @@ import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import ConfirmDeleteCard from "./ConfirmDeleteCard";
 import Register from "./Register";
 import Login from "./LogIn";
 import ProtectedRoute from "./ProtectedRoute";
@@ -21,6 +22,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [isInfoTooltip, setInfoTooltip] = useState(false);
   const [isInfoTooltipKind, setInfoTooltipKind] = useState(false);
@@ -28,13 +30,14 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  const [card, setCard] = useState([]);
   const history = useHistory();
-
 
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setIsDeleteCardPopupOpen(false);
     setSelectedCard({});
     setInfoTooltip(false);
   }
@@ -45,6 +48,7 @@ function App() {
     isInfoTooltip ||
     isEditProfilePopupOpen ||
     isAddPlacePopupOpen ||
+    isDeleteCardPopupOpen ||
     selectedCard.link;
 
   useEffect(() => {
@@ -75,6 +79,10 @@ function App() {
 
   function handleCardClick(card) {
     setSelectedCard(card);
+  }
+
+  function handleOnDeleteCard() {
+    setIsDeleteCardPopupOpen(!isDeleteCardPopupOpen)
   }
 
   function handleUpdateUser(data) {
@@ -120,6 +128,7 @@ function App() {
       .deleteCard(card._id)
       .then((res) => {
         setCards((cards) => cards.filter((c) => c._id !== card._id));
+        closeAllPopups();
       })
       .catch((err) => {
         console.log(err);
@@ -212,8 +221,6 @@ function App() {
       });
   }
 
-  console.log(loggedIn)
-
   return (
     <div className="page__container">
       <CurrentUserContext.Provider value={currentUser}>
@@ -227,14 +234,12 @@ function App() {
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
             onCardClick={handleCardClick}
+            onCardDelete={handleOnDeleteCard}
+            setCard={setCard}
             cards={cards}
             onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
             loggedIn={loggedIn}
           />
-          <Route exact path="/">
-            {loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
-          </Route>
           <Route path="/signup">
             <Register userRegister={userRegister} />
           </Route>
@@ -262,7 +267,10 @@ function App() {
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
         />
-        <PopupWithForm
+        <ConfirmDeleteCard
+          isOpen={isDeleteCardPopupOpen}
+          card={card}
+          onDeleteCard={handleCardDelete}
           name="confirm"
           title="Вы уверены?"
           onClose={closeAllPopups}
