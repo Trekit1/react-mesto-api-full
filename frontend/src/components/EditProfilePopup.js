@@ -2,9 +2,20 @@ import { useState, useContext, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, useFormWithValidation }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+
+  const {handleChange, errors, isValid, setErrors, setValues, setIsValid } = useFormWithValidation();
+
+  
+  useEffect(() => {
+    if (!isOpen) {
+      setErrors({})
+      setIsValid(true)
+    }
+  }, [isOpen])
+
 
   function handleChangeName(e) {
     setName(e.target.value);
@@ -19,6 +30,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
+    setValues({profileName: name, profileJob: description})
   }, [currentUser, isOpen]);
 
   function handleSubmit(e) {
@@ -29,6 +41,10 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     });
   }
 
+  const errorProfileNameClass = `popup__error-text ${errors.hasOwnProperty('profileName') ? 'popup__error-text_active' : ''}`
+
+  const errorProfileJobClass = `popup__error-text ${errors.hasOwnProperty('profileJob') ? 'popup__error-text_active' : ''}`
+
   return (
     <PopupWithForm
       name="profile"
@@ -37,6 +53,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       onClose={onClose}
       onSubmit={handleSubmit}
       buttonText="Сохранить"
+      handleChange={handleChange}
+      isValid={isValid}
     >
       <input
         id="profile-name"
@@ -50,7 +68,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         maxLength="40"
         required
       />
-      <span className="profile-name-error  popup__error-text"></span>
+      <span className={errorProfileNameClass}>{errors.profileName}</span>
       <input
         id="profile-job"
         name="profileJob"
@@ -63,7 +81,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         maxLength="200"
         required
       />
-      <span className="profile-job-error  popup__error-text"></span>
+      <span className={errorProfileJobClass}>{errors.profileJob}</span>
     </PopupWithForm>
   );
 }

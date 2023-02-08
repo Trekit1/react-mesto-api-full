@@ -1,9 +1,20 @@
 import PopupWithForm from "./PopupWithForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, useFormWithValidation }) {
   const [cardName, setCardName] = useState("");
   const [cardLink, setCardLink] = useState("");
+
+  const {handleChange, errors, isValid, setErrors, setIsValid } = useFormWithValidation();
+
+  useEffect(() => {
+    if (!isOpen) {
+      setErrors({})
+      setCardName('')
+      setCardLink('')
+      setIsValid(false)
+    }
+  }, [isOpen])
 
   function handleCardName(e) {
     setCardName(e.target.value);
@@ -22,6 +33,10 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
     });
   }
 
+  const errorCardNameClass = `popup__error-text ${errors.hasOwnProperty('cardName') ? 'popup__error-text_active' : ''}`
+
+  const errorCardLinkClass = `popup__error-text ${errors.hasOwnProperty('cardLink') ? 'popup__error-text_active' : ''}`
+
   return (
     <PopupWithForm
       name="card"
@@ -30,6 +45,8 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       onClose={onClose}
       onSubmit={handleSubmit}
       buttonText="Сохранить"
+      handleChange={handleChange}
+      isValid={isValid}
     >
       <input
         id="card-name"
@@ -43,7 +60,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         maxLength="30"
         required
       />
-      <span className="card-name-error  popup__error-text"></span>
+      <span className={errorCardNameClass}>{errors.cardName}</span>
       <input
         id="card-link"
         name="cardLink"
@@ -54,7 +71,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         placeholder="Ссылка на картинку"
         required
       />
-      <span className="card-link-error  popup__error-text"></span>
+      <span className={errorCardLinkClass}>{errors.cardLink}</span>
     </PopupWithForm>
   );
 }

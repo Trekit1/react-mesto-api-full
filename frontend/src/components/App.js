@@ -34,6 +34,27 @@ function App() {
   const [card, setCard] = useState([]);
   const history = useHistory();
 
+
+  function useFormWithValidation() {
+    const [values, setValues] = useState({});
+    const [errors, setErrors] = useState({});
+    const [isValid, setIsValid] = useState(false);
+
+  
+    const handleChange = (event) => {
+  
+      const target = event.target;
+      const name = target.name;
+      const value = target.value;
+      setValues({...values, [name]: value});
+      setErrors({...errors, [name]: target.validationMessage });
+      setIsValid(target.closest("form").checkValidity());
+    };
+
+    return { values, handleChange, errors, isValid, setValues, setErrors, setIsValid };
+  }
+
+
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -248,23 +269,32 @@ function App() {
           </Route>
         </Switch>
         <Footer />
+        
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          useFormWithValidation={useFormWithValidation}
         />
+
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          useFormWithValidation={useFormWithValidation}
         />
+
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          useFormWithValidation={useFormWithValidation}
         />
+
         <ConfirmDeleteCard
+          useFormWithValidation={useFormWithValidation}
           isOpen={isDeleteCardPopupOpen}
           card={card}
           onDeleteCard={handleCardDelete}
@@ -273,6 +303,8 @@ function App() {
           onClose={closeAllPopups}
           buttonText="Да"
         />
+
+
         <InfoTooltip
           name="infoTooltip"
           isOpen={isInfoTooltip}
