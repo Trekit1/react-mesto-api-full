@@ -4,7 +4,6 @@ import "../index.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
-import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -13,6 +12,8 @@ import ConfirmDeleteCard from "./ConfirmDeleteCard";
 import Register from "./Register";
 import Login from "./LogIn";
 import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRouteAuth from "./ProtectedRouteAuth";
+import ErrorNotFound from "./ErrorNotFound";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 import InfoTooltip from "./InfoTooltip";
@@ -240,14 +241,10 @@ function App() {
             onCardLike={handleCardLike}
             loggedIn={loggedIn}
           />
-          <Route path="/signup">
-            <Register userRegister={userRegister} />
-          </Route>
-          <Route path="/signin">
-            <Login
-              setLoggedIn={setLoggedIn}
-              userAuthorization={userAuthorization}
-            />
+          <ProtectedRouteAuth exact path="/signup" component={Register} loggedIn={loggedIn} userRegister={userRegister}/>
+          <ProtectedRouteAuth exact path="/signin" component={Login} loggedIn={loggedIn} setLoggedIn={setLoggedIn} userAuthorization={userAuthorization}/>
+          <Route>
+                <ErrorNotFound/>
           </Route>
         </Switch>
         <Footer />

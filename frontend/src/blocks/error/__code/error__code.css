@@ -1,0 +1,24 @@
+.error__code {
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 140px;
+    line-height: 169px;
+    color: white;
+}
+
+@media screen and (max-width:1279px) {
+    .error__code {
+        margin: 250px 0px 0px 0px;
+    }
+
+}
+
+@media screen and (max-width:767px) {
+    .error__code {
+        margin: 200px 0px 0px 0px;
+        font-size: 80px;
+        line-height: 97px;
+
+    }
+}

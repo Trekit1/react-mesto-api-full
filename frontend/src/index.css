@@ -67,6 +67,10 @@
 @import url(./blocks/popup/__title/_infoTooltip/popup__title_infoTooltip.css);
 @import url(./blocks/popup/__image/popup__image.css);
 @import url(./blocks/popup/__container/_infoTooltip.css/popup__container_infoTooltip.css);
+@import url(./blocks/error/error.css);
+@import url(./blocks/error/__button/error__button.css);
+@import url(./blocks/error/__code/error__code.css);
+@import url(./blocks/error/__message/error__message.css);
 
 
 
